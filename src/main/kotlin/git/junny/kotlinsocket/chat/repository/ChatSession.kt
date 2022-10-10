@@ -7,12 +7,13 @@ import java.time.LocalDateTime.now
 
 @RedisHash(value = "people", timeToLive = 30)
 class ChatSession(
-    @Id
-    val id: String,
     val username: String,
     val sessionId: String,
-    val regDate: LocalDateTime = now()
+    val regDate: LocalDateTime = now(),
     ){
+    @Id
+    var id: Long? = null
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

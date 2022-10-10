@@ -17,57 +17,64 @@ internal class ChatSessionRepositoryTest{
 
     @Test
     fun `save test`(){
-        val chatSession = ChatSession("1", "junny", "1234")
+        val chatSession = ChatSession("junny", "1234")
         val result = chatSessionRepository.save(chatSession)
         assertEquals(chatSession, result)
     }
     @Test
     fun `find test`(){
-        val chatSession = ChatSession("1", "junny", "1234")
+        val chatSession = ChatSession("junny", "1234")
         chatSessionRepository.save(chatSession)
-        val result = chatSessionRepository.findByIdOrNull("1") ?: fail("not found")
+        val result = chatSessionRepository.findByIdOrNull(1L) ?: fail("not found")
         assertEquals(chatSession, result)
     }
     @Test
     fun `delete test`(){
-        val chatSession = ChatSession("1", "junny", "1234")
+        val chatSession = ChatSession( "junny", "1234")
         chatSessionRepository.save(chatSession)
-        chatSessionRepository.deleteById("1")
-        val result = chatSessionRepository.findByIdOrNull("1")
+        chatSessionRepository.deleteById(1L)
+        val result = chatSessionRepository.findByIdOrNull(1L)
         assertNull(result)
     }
     @Test
     fun `update test`(){
-        val chatSession = ChatSession("1", "junny", "1234")
+        val chatSession = ChatSession("junny", "1234")
         chatSessionRepository.save(chatSession)
-        val result = chatSessionRepository.findByIdOrNull("1") ?: fail("not found")
+        val result = chatSessionRepository.findByIdOrNull(1L) ?: fail("not found")
         assertEquals(chatSession, result)
-        val updateChatSession = ChatSession("1", "new", "1234")
+        val updateChatSession = ChatSession( "new", "1234")
         chatSessionRepository.save(updateChatSession)
-        val updateResult = chatSessionRepository.findByIdOrNull("1") ?: fail("not found")
+        val updateResult = chatSessionRepository.findByIdOrNull(1L) ?: fail("not found")
         assertEquals(updateChatSession, updateResult)
     }
     @Test
     fun `deleteAll test`(){
-        val chatSession = ChatSession("1", "junny", "1234")
-        chatSessionRepository.save(chatSession)
+        val chatSession = ChatSession( "junny", "1234")
+        val id = chatSessionRepository.save(chatSession).id
         chatSessionRepository.deleteAll()
-        val result = chatSessionRepository.findByIdOrNull("1")
+        val result = chatSessionRepository.findByIdOrNull(1L)
         assertNull(result)
     }
     @Test
     fun `count test`(){
-        val chatSession = ChatSession("1", "junny", "1234")
-        chatSessionRepository.save(chatSession)
+        val chatSession = ChatSession("junny", "1234")
+      chatSessionRepository.save(chatSession).id
         val result = chatSessionRepository.count()
         assertEquals(1, result)
     }
     @Test
     fun `existsById test`(){
-        val chatSession = ChatSession("1", "junny", "1234")
+        val chatSession = ChatSession("junny", "1234")
         chatSessionRepository.save(chatSession)
-        val result = chatSessionRepository.existsById("1")
+        val result = chatSessionRepository.existsById(1L)
         assertTrue(result)
+    }
+    @Test
+    fun `findAll test`(){
+        val chatSession = ChatSession("junny", "1234")
+        chatSessionRepository.save(chatSession)
+        val result = chatSessionRepository.findAll()
+        assertEquals(1, result.count())
     }
 
 }
